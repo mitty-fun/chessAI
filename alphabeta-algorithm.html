@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="game" style="width: 500px;" class="text-center m-auto py-5">
+        <h1 class="py-3 text-center">Alpha-Beta Algorithm</h1>
+        <div id="board" class="my-3" v-bind:class="{reverse: black}">
+            <template v-for="(row, x) in grid">
+                <div v-for="(col, y) in row" v-bind:style="{backgroundColor: color(x, y)}" @click="click(x, y)">
+                    <img src="images/b_pawn.svg" v-if="col === 'b_pawn'">
+                    <img src="images/b_rook.svg" v-if="col === 'b_rook'">
+                    <img src="images/b_knight.svg" v-if="col === 'b_knight'">
+                    <img src="images/b_bishop.svg" v-if="col === 'b_bishop'">
+                    <img src="images/b_king.svg" v-if="col === 'b_king'">
+                    <img src="images/b_queen.svg" v-if="col === 'b_queen'">
+
+                    <img src="images/w_pawn.svg" v-if="col === 'w_pawn'">
+                    <img src="images/w_rook.svg" v-if="col === 'w_rook'">
+                    <img src="images/w_knight.svg" v-if="col === 'w_knight'">
+                    <img src="images/w_bishop.svg" v-if="col === 'w_bishop'">
+                    <img src="images/w_king.svg" v-if="col === 'w_king'">
+                    <img src="images/w_queen.svg" v-if="col === 'w_queen'">
+                </div>
+            </template>
+        </div>
+        <p class="font-weight-bold">{{message}}</p>
+        <button class="mb-3" @click="runAI">{{chess.turn === 'w' ? 'White' : 'Black'}} AI</button>
+        <select class="mb-2 form-control" v-model="depth">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>cost</th>
+                <th>depth</th>
+            </tr>
+            <tr v-for="(log, idx) in logs">
+                <td>{{idx + 1}}</td>
+                <td>{{log.cost/1000}}s</td>
+                <td>{{log.depth}}</td>
+            </tr>
+        </table>
+    </div>
+    <script src="./game/chess.js"></script>
+    <script src="./algorithm/evaluation.js"></script>
+    <script src="./algorithm/alphabeta.js"></script>
+    <script src="./game/index.js"></script>
+</body>
+
+</html>
